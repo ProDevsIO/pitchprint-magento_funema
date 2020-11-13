@@ -1,0 +1,7 @@
+{
+  "name": "ProDevsIO/pitchprint-magento_funema",
+  "description": "Pitchprint SDK",
+  "require": {
+    "php": "^7.2"
+  }
+}
