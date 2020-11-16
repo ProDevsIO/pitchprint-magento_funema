@@ -7,7 +7,7 @@
 -->
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
-    <table name="pitch_print_config" resource="default" engine="innodb" comment="GLS Shipping Tablerate">
+    <table name="pitch_print_config" resource="default" engine="innodb" comment="config_table">
         <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true"
                 comment="Primary key"/>
         <column xsi:type="text" name="api_key" nullable="true"
@@ -18,7 +18,7 @@
             <column name="id"/>
         </constraint>
     </table>
-    <table name="pitch_print_product_design" resource="default" engine="innodb" comment="GLS Shipping Tablerate">
+    <table name="pitch_print_product_design" resource="default" engine="innodb" comment="product_design_relationship">
         <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="true"
                 comment="Primary key"/>
         <column xsi:type="text" name="design_id" nullable="true"
@@ -27,7 +27,7 @@
             <column name="product_id"/>
         </constraint>
     </table>
-    <table name="pitch_print_quote_item" resource="default" engine="innodb" comment="GLS Shipping Tablerate">
+    <table name="pitch_print_quote_item" resource="default" engine="innodb" comment="quote_item">
         <column xsi:type="int" name="item_id" padding="10" unsigned="true" nullable="false" identity="true"
                 comment="Primary key"/>
         <column xsi:type="text" name="project_data" nullable="true"
