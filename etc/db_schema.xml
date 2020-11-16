@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="pitch_print_config" resource="default" engine="innodb" comment="GLS Shipping Tablerate">
+        <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Primary key"/>
+        <column xsi:type="text" name="api_key" nullable="true"
+                comment="PitchPrint ApiKey"/>
+        <column xsi:type="text" name="secret_key" nullable="true"
+                comment="PitchPrint secret_key"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+    <table name="pitch_print_product_design" resource="default" engine="innodb" comment="GLS Shipping Tablerate">
+        <column xsi:type="int" name="product_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Primary key"/>
+        <column xsi:type="text" name="design_id" nullable="true"
+                comment="PitchPrint Design ID"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="product_id"/>
+        </constraint>
+    </table>
+    <table name="pitch_print_quote_item" resource="default" engine="innodb" comment="GLS Shipping Tablerate">
+        <column xsi:type="int" name="item_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Primary key"/>
+        <column xsi:type="text" name="project_data" nullable="true"
+                comment="project_data"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="item_id"/>
+        </constraint>
+
+    </table>
+</schema>

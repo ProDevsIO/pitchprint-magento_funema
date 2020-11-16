@@ -2,94 +2,52 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c1c81381-80cb-49da-b935-449f3608f8c1" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Block/Adminhtml/Order/View/Items/Renderer/PitchPrintRenderer.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Block/Cart/Item/Renderer/After.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Block/Cart/Item/Renderer/After.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Block/Product/View/Display.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Block/Product/View/Display.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Config/Constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Config/Constants.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Controller/Adminhtml/Configuration/Index.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Controller/Adminhtml/Configuration/Save.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Model/AdditionalConfigProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Model/AdditionalConfigProvider.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Observer/AddToCartAfter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Observer/AddToCartAfterComplete.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Observer/Productsaveafter.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Observer/SalesOrderStatus.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Setup/InstallSchema.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.phpRaw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/composer.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/etc/adminhtml/di.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/etc/adminhtml/di.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/etc/adminhtml/events.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/etc/adminhtml/events.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/etc/adminhtml/menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/etc/adminhtml/menu.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/etc/adminhtml/routes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/etc/adminhtml/routes.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/etc/events.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/etc/events.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/etc/frontend/di.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/etc/frontend/di.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/etc/module.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/etc/module.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/registration.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/registration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/adminhtml/layout/pitchprint_configuration_index.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/adminhtml/layout/sales_order_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/layout/sales_order_view.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/adminhtml/templates/configuration.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/templates/configuration.phtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/adminhtml/templates/order/view/items/renderer/default.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/adminhtml/templates/order/view/js/admin.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/adminhtml/ui_component/product_form.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/ui_component/product_form.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/layout/catalog_product_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/layout/catalog_product_view.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/layout/checkout_cart_item_renderers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/layout/checkout_cart_item_renderers.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/layout/checkout_index_index.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/layout/checkout_index_index.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/requirejs-config.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/templates/cart/clientjs.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/templates/cart/item/default.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/templates/product/view/addtocart.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/templates/product/view/addtocart.phtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/web/js/view/addtocart.js" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/addtocart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/web/js/view/afterAddCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/afterAddCart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/web/js/view/afterSave.js" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/afterSave.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/web/js/view/onProductLoad.js" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/onProductLoad.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/web/js/view/summary/item/details/thumbnail.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/web/js/view/test.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.2/view/frontend/web/template/summary/item/details/thumbnail.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Block/Adminhtml/Order/View/Items/Renderer/PitchPrintRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Block/Adminhtml/Order/View/Items/Renderer/PitchPrintRenderer.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Block/Cart/Item/Renderer/After.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Block/Product/View/Display.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Config/Constants.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Controller/Adminhtml/Configuration/Index.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Controller/Adminhtml/Configuration/Index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Controller/Adminhtml/Configuration/Save.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Controller/Adminhtml/Configuration/Save.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Model/AdditionalConfigProvider.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Observer/AddToCartAfter.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Observer/AddToCartAfter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Observer/AddToCartAfterComplete.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Observer/AddToCartAfterComplete.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Observer/Productsaveafter.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Observer/Productsaveafter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Observer/SalesOrderStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Observer/SalesOrderStatus.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Setup/InstallSchema.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Setup/InstallSchema.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.php" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.phpRaw" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.phpRaw" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/etc/adminhtml/di.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/etc/adminhtml/events.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/etc/adminhtml/menu.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/etc/adminhtml/routes.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/etc/events.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/etc/frontend/di.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/etc/module.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/registration.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/adminhtml/layout/pitchprint_configuration_index.xml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/layout/pitchprint_configuration_index.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/adminhtml/layout/sales_order_view.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/adminhtml/templates/configuration.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/adminhtml/templates/order/view/items/renderer/default.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/templates/order/view/items/renderer/default.phtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/adminhtml/templates/order/view/js/admin.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/templates/order/view/js/admin.phtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/adminhtml/ui_component/product_form.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/layout/catalog_product_view.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/layout/checkout_cart_item_renderers.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/layout/checkout_index_index.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/requirejs-config.js" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/requirejs-config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/templates/cart/clientjs.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/templates/cart/clientjs.phtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/templates/cart/item/default.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/templates/cart/item/default.phtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/templates/product/view/addtocart.phtml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/web/js/view/addtocart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/web/js/view/afterAddCart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/web/js/view/afterSave.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/web/js/view/onProductLoad.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/web/js/view/summary/item/details/thumbnail.js" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/summary/item/details/thumbnail.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/web/js/view/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/2.3/view/frontend/web/template/summary/item/details/thumbnail.html" beforeDir="false" afterPath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/template/summary/item/details/thumbnail.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/view/frontend/web/js/view/addtocart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Block/Adminhtml/Order/View/Items/Renderer/PitchPrintRenderer.php" beforeDir="false" afterPath="$PROJECT_DIR$/Block/Adminhtml/Order/View/Items/Renderer/PitchPrintRenderer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Block/Cart/Item/Renderer/After.php" beforeDir="false" afterPath="$PROJECT_DIR$/Block/Cart/Item/Renderer/After.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Block/Product/View/Display.php" beforeDir="false" afterPath="$PROJECT_DIR$/Block/Product/View/Display.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Config/Constants.php" beforeDir="false" afterPath="$PROJECT_DIR$/Config/Constants.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Controller/Adminhtml/Configuration/Index.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Adminhtml/Configuration/Index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Controller/Adminhtml/Configuration/Save.php" beforeDir="false" afterPath="$PROJECT_DIR$/Controller/Adminhtml/Configuration/Save.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Model/AdditionalConfigProvider.php" beforeDir="false" afterPath="$PROJECT_DIR$/Model/AdditionalConfigProvider.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Observer/AddToCartAfter.php" beforeDir="false" afterPath="$PROJECT_DIR$/Observer/AddToCartAfter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Observer/AddToCartAfterComplete.php" beforeDir="false" afterPath="$PROJECT_DIR$/Observer/AddToCartAfterComplete.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Observer/Productsaveafter.php" beforeDir="false" afterPath="$PROJECT_DIR$/Observer/Productsaveafter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Observer/SalesOrderStatus.php" beforeDir="false" afterPath="$PROJECT_DIR$/Observer/SalesOrderStatus.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Setup/InstallSchema.php" beforeDir="false" afterPath="$PROJECT_DIR$/Setup/InstallSchema.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.php" beforeDir="false" afterPath="$PROJECT_DIR$/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.phpRaw" beforeDir="false" afterPath="$PROJECT_DIR$/Ui/DataProvider/Product/Form/Modifier/PitchPrintDesigns.phpRaw" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/composer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/etc/adminhtml/di.xml" beforeDir="false" afterPath="$PROJECT_DIR$/etc/adminhtml/di.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/etc/adminhtml/events.xml" beforeDir="false" afterPath="$PROJECT_DIR$/etc/adminhtml/events.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/etc/adminhtml/menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/etc/adminhtml/menu.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/etc/adminhtml/routes.xml" beforeDir="false" afterPath="$PROJECT_DIR$/etc/adminhtml/routes.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/etc/events.xml" beforeDir="false" afterPath="$PROJECT_DIR$/etc/events.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/etc/frontend/di.xml" beforeDir="false" afterPath="$PROJECT_DIR$/etc/frontend/di.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/etc/module.xml" beforeDir="false" afterPath="$PROJECT_DIR$/etc/module.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/registration.php" beforeDir="false" afterPath="$PROJECT_DIR$/registration.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/layout/pitchprint_configuration_index.xml" beforeDir="false" afterPath="$PROJECT_DIR$/view/adminhtml/layout/pitchprint_configuration_index.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/layout/sales_order_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/view/adminhtml/layout/sales_order_view.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/templates/configuration.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/view/adminhtml/templates/configuration.phtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/templates/order/view/items/renderer/default.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/view/adminhtml/templates/order/view/items/renderer/default.phtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/templates/order/view/js/admin.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/view/adminhtml/templates/order/view/js/admin.phtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/adminhtml/ui_component/product_form.xml" beforeDir="false" afterPath="$PROJECT_DIR$/view/adminhtml/ui_component/product_form.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/layout/catalog_product_view.xml" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/layout/catalog_product_view.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/layout/checkout_cart_item_renderers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/layout/checkout_cart_item_renderers.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/layout/checkout_index_index.xml" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/layout/checkout_index_index.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/requirejs-config.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/requirejs-config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/templates/cart/clientjs.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/templates/cart/clientjs.phtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/templates/cart/item/default.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/templates/cart/item/default.phtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/templates/product/view/addtocart.phtml" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/templates/product/view/addtocart.phtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/addtocart.js" beforeDir="false" afterPath="$PROJECT_DIR$/etc/db_schema.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/afterAddCart.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/web/js/view/afterAddCart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/afterSave.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/web/js/view/afterSave.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/onProductLoad.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/web/js/view/onProductLoad.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/summary/item/details/thumbnail.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/web/js/view/summary/item/details/thumbnail.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/js/view/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/web/js/view/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PitchPrintInc/view/frontend/web/template/summary/item/details/thumbnail.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/frontend/web/template/summary/item/details/thumbnail.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,16 +55,16 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/2.2/composer.json</pharConfigPath>
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="497">
+              <first_editor relative-caret-position="675">
                 <caret line="45" column="6" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="6" />
               </first_editor>
               <second_editor />
@@ -114,7 +72,72 @@
           </provider>
         </entry>
       </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/composer.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="240">
+              <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/registration.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="7" selection-start-line="7" selection-end-line="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/events.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/module.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/adminhtml/di.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/adminhtml/events.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/etc/frontend/di.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/etc/db_schema.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="315">
+              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+              <folding>
+                <element signature="n#table#0;n#schema#0;n#!!top" />
+                <element signature="n#table#2;n#schema#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>db_schema</find>
+    </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/PitchPrintInc</dir>
+      <dir>$PROJECT_DIR$</dir>
+    </dirStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -123,10 +146,13 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/composer.json" />
+        <option value="$PROJECT_DIR$/registration.php" />
+        <option value="$PROJECT_DIR$/etc/db_schema.xml" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="849" />
   </component>
@@ -135,7 +161,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -146,19 +171,25 @@
             <path>
               <item name="pitchprint-magento" type="b2602c69:ProjectViewProjectNode" />
               <item name="pitchprint-magento" type="462c0819:PsiDirectoryNode" />
-              <item name="PitchPrintInc" type="462c0819:PsiDirectoryNode" />
+              <item name="etc" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.selected.configurable" value="web-ide.project.structure" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -182,25 +213,21 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1605287668474</updated>
-      <workItem from="1605287669836" duration="286000" />
+      <workItem from="1605287669836" duration="1341000" />
+      <workItem from="1605525740759" duration="1066000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="286000" />
+    <option name="totallyTimeSpent" value="2407000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="849" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24964234" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2532189" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -208,10 +235,15 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.32891566" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -221,10 +253,57 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="497">
+          <first_editor relative-caret-position="675">
             <caret line="45" column="6" selection-start-line="45" selection-start-column="6" selection-end-line="45" selection-end-column="6" />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/composer.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="9" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/registration.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" selection-start-line="7" selection-end-line="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/events.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/module.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/adminhtml/di.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/adminhtml/events.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/frontend/di.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/etc/db_schema.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+          <folding>
+            <element signature="n#table#0;n#schema#0;n#!!top" />
+            <element signature="n#table#2;n#schema#0;n#!!top" />
+          </folding>
         </state>
       </provider>
     </entry>
