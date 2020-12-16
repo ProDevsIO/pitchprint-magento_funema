@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright  Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="pitchprint" type="host">*.pitchprint.io</value>
+                <value id="pitchprint-base" type="host">https://pitchprint.io</value>
+                <value id="pitchprint-api" type="host">https://api.pitchprint.io</value>
+            </values>
+        </policy>
+        <policy id="style-src">
+            <values>
+                <value id="pitchprint-css" type="host">*.pitchprint.io</value>
+                <value id="pitchprint-base-css" type="host">https://pitchprint.io</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

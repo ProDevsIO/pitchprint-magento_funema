@@ -15,10 +15,14 @@ use PitchPrintInc\PitchPrint\Ui\DataProvider\Product\Form\Modifier;
 class Productsaveafter implements ObserverInterface
 {    
 	protected $request;
-	
-	public function __construct(\Magento\Framework\App\RequestInterface $request)
-	{
+	protected $logger;
+
+	public function __construct(
+		\Magento\Framework\App\RequestInterface $request,
+		\Psr\Log\LoggerInterface $logger
+	) {
 		$this->request = $request;	
+		$this->logger = $logger;
 	}
 	
     public function execute(\Magento\Framework\Event\Observer $observer)
@@ -27,10 +31,10 @@ class Productsaveafter implements ObserverInterface
 		$ppa_pick	= $product->getData(Modifier\PitchPrintDesigns::FIELD_NAME_SELECT);
 		
 		if ( !empty($ppa_pick) ) {	
-			try {	
+			try { 
 				$this->saveProductDesign( $product->getId(), $ppa_pick );
 			} catch (Exception $e) {
-				Mage::log($e->getMessage);
+				$this->logger->info($e->getMessage);
 			};
 		}
 	}
