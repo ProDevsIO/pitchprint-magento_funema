@@ -21,8 +21,8 @@ class AddToCartAfter implements ObserverInterface
 
 	public function __construct(
 	    RequestInterface $request, 
-        SerializerInterface $serializer)
-	{
+		SerializerInterface $serializer
+	) {
 		$this->request = $request;	
 		$this->serializer = $serializer;
 		$this->allItems = $this->getAllItems();

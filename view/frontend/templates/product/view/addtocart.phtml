@@ -1,13 +1,15 @@
 <?php
 $designId 	= $block->getDesignId();
+$pitchPrintDesigns = $block->getAllPitchPrintProductDesigns();
 $apiKey 	= $block->getApiKey();
+$productId = $block->getProductId();
 
 ?>
 
 <?php if ( $designId && $designId != 'none' && $apiKey ) : ?>
 
 	<input type="hidden" id="_pitchprint" name="_pitchprint"/>
-	
+	<input type="hidden" id="_selected_product_id" name="_selected_product_id" value="<?= $productId; ?>" />
 	<script defer="true" src="https://pitchprint.io/rsc/js/client.js"></script>
 
 	<div id="pp_main_btn_sec"></div>
@@ -15,7 +17,7 @@ $apiKey 	= $block->getApiKey();
 	<script>
 
 		function pp_w2p_getProductId() {
-			const productSel = document.querySelector('#product_addtocart_form input[name=product]');
+			const productSel = document.querySelector('#product_addtocart_form input[name=_selected_product_id]');
 			return productSel ? productSel.value : 0;
 		}
 		
@@ -26,43 +28,71 @@ $apiKey 	= $block->getApiKey();
 			if (_data) return _data.projectId;
 			return 0;
 		}
+
+		function pp_w2p_getDesignId(productId) {
+			let productDesigns = '<?= json_encode($pitchPrintDesigns); ?>'
+			productDesigns = JSON.parse(productDesigns)
+			let designId = '<?=$designId?>'
+			
+			for (let [key, value] of Object.entries(productDesigns)) {
+				if (parseInt(value.product_id) === parseInt(productId)) {
+					designId = value.design_id;
+					break;
+				}
+			}
+			return designId;
+		}
 		
 		(function( _doc, window, require ) {
-
-			require(['jquery', 'domReady!'], function () 
-			{
-				const productId = pp_w2p_getProductId();
-				const localPId = pp_w2p_getLocalPId(productId);
-				
-				if (typeof PitchPrintClient === 'undefined') return;
-
-				window.ppclient = new PitchPrintClient({
-					uploadUrl: 'url_pending',
-					userId: '1',
-					langCode: 'en',
-					enableUpload: 0,
-					designId: '<?=$designId?>',
-					previews: '',
-					mode: localPId ? 'edit': 'new',
-					createButtons: true,
-					projectId: localPId,
-					pluginRoot: 'path_pending',
-					apiKey: '<?=$apiKey?>',
-					client: 'mg',
-					product: {
-						id: productId,
-						name: '' // todo get product name
-					},
-					userData: {
-						email: '',
-						name: '',
-						firstname: '',
-						lastname: '',
-						telephone: '',
-						address: ''
-					}
+			require([
+				'jquery',
+				'domReady!'
+			], function ($) {
+				$(document).on('change',"[name=_selected_product_id]" , function() {
+					refreshDesignId();
 				});
-				require(['PitchPrintOnProductLoad', 'PitchPrintAfterSave', 'PitchPrintAfterAddCart']);
+				
+				refreshDesignId();
+
+				function refreshDesignId() {
+					
+					const getProductId = pp_w2p_getProductId();
+					const getDesignId = pp_w2p_getDesignId(getProductId);
+					const localPId = pp_w2p_getLocalPId(getProductId);
+
+					console.log('Current Product Id: ', getProductId, ' | Current Design ID: ',getDesignId)
+
+					if (typeof PitchPrintClient === 'undefined') return;
+
+					window.ppclient = new PitchPrintClient({
+						uploadUrl: 'url_pending',
+						userId: '1',
+						langCode: 'en',
+						enableUpload: 0,
+						designId: getDesignId,
+						previews: '',
+						mode: localPId ? 'edit': 'new',
+						createButtons: true,
+						projectId: localPId,
+						pluginRoot: 'path_pending',
+						apiKey: '<?=$apiKey?>',
+						client: 'mg',
+						product: {
+							id: getProductId,
+							name: '' // todo get product name
+						},
+						userData: {
+							email: '',
+							name: '',
+							firstname: '',
+							lastname: '',
+							telephone: '',
+							address: ''
+						}
+					});
+
+					require(['PitchPrintOnProductLoad', 'PitchPrintAfterSave', 'PitchPrintAfterAddCart']);
+				}
 			});
 		})(document, window, require);
 	</script>

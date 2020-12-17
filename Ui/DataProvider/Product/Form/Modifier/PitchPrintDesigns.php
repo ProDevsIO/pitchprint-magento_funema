@@ -19,7 +19,7 @@ use Magento\Ui\Component\Form\Field;
 use Magento\Ui\Component\Form\Element\DataType\Text;
 use Magento\Ui\Component\Form\Element\Input;
 use Magento\Ui\Component\Form\Element\Select;
-
+use Magento\Ui\Component\Form\Element\MultiSelect;
 
 class PitchPrintDesigns extends AbstractModifier
 {
@@ -30,9 +30,7 @@ class PitchPrintDesigns extends AbstractModifier
     const CONTAINER_HEADER_NAME = 'pitch_print_fieldset_content_header';
 
     // Fields names
-//     const FIELD_NAME_TEXT = 'example_text_field';
     const FIELD_NAME_SELECT = 'ppa_pick';
-//     const FIELD_NAME_MULTISELECT = 'example_multiselect_field';
 
 	const PP_FIRST_SELECT_ELEMENT = [ [ 'value' => 'none', 'label' => 'None' ] ];
 
@@ -69,8 +67,8 @@ class PitchPrintDesigns extends AbstractModifier
 	/**
 	 * @var text
 	 */
-	protected $_prodDesignId;
-	
+    protected $_prodDesignId;
+
     /**
      * @param LocatorInterface $locator
      * @param ArrayManager $arrayManager
@@ -84,11 +82,11 @@ class PitchPrintDesigns extends AbstractModifier
         $this->locator = $locator;
         $this->arrayManager = $arrayManager;
         $this->urlBuilder = $urlBuilder;
-		
+
 		$objectManager  	= \Magento\Framework\App\ObjectManager::getInstance();
        	$this->_resource    = $objectManager->get('Magento\Framework\App\ResourceConnection');
-    	$this->_db      	= $this->_resource->getConnection();
-		
+        $this->_db      	= $this->_resource->getConnection();
+
 		$this->_prodDesignId = $this->_getProductDesign();
     }
 	
@@ -108,7 +106,7 @@ class PitchPrintDesigns extends AbstractModifier
 			}
 		}
 		return 0;
-	}
+    }
 
     /**
      * Data modifier, does nothing in our example.
@@ -212,7 +210,6 @@ class PitchPrintDesigns extends AbstractModifier
      */
     protected function getSelectFieldConfig($sortOrder)
     {
-// 		print_r($this->_prodDesignId);die();
         return [
             'arguments' => [
                 'data' => [

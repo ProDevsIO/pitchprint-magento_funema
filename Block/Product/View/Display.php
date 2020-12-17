@@ -10,6 +10,7 @@ class Display extends \Magento\Framework\View\Element\Template
 	protected $_db;
 	protected $_design_id;
 	protected $_api_key;
+	protected $_product_designs;
 	
 	public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
@@ -25,6 +26,7 @@ class Display extends \Magento\Framework\View\Element\Template
         $this->_productId	= $coreRegistry->registry('current_product')->getId();
 		$this->_design_id 	= $this->_fetchPpDesignId($this->_productId);
 		$this->_api_key		= $this->_fetchPpApiKey();
+		$this->_product_designs =  $this->_fetchProductDesigns();
 	}
     
     private function _fetchPpDesignId ( $product_id )
@@ -36,6 +38,16 @@ class Display extends \Magento\Framework\View\Element\Template
 			return $design_id[0]['design_id'];
 		}
 		return 0;
+    }
+    private function _fetchProductDesigns ()
+    {
+		$tableName 		= $this->_resource->getTableName(\PitchPrintInc\PitchPrint\Config\Constants::TABLE_PRODUCT_DESIGN);
+		$productDesigns		= $this->_db->fetchAll( "SELECT * FROM $tableName");
+
+		if ( count($productDesigns) ) {
+			return $productDesigns ;
+		}
+		return [];
     }
 	
 	private function _fetchPpApiKey()
@@ -52,4 +64,8 @@ class Display extends \Magento\Framework\View\Element\Template
 	public function getDesignId() { return $this->_design_id; }
 	
 	public function getApiKey() { return $this->_api_key; }
+
+	public function getProductId() { return $this->_productId; }
+
+	public function getAllPitchPrintProductDesigns() { return $this->_product_designs; }
 }
