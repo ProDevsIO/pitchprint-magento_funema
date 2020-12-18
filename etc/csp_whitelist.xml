@@ -6,7 +6,7 @@
  */
 -->
 <csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
-    <policies>
+    <!-- <policies>
         <policy id="script-src">
             <values>
                 <value id="pitchprint" type="host">*.pitchprint.io</value>
@@ -20,5 +20,5 @@
                 <value id="pitchprint-base-css" type="host">https://pitchprint.io</value>
             </values>
         </policy>
-    </policies>
+    </policies> -->
 </csp_whitelist>
