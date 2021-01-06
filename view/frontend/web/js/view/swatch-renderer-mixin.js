@@ -335,7 +335,6 @@ define([
          * @private
          */
         _create: function () {
-            console.log('Inside custom swatch')
             var options = this.options,
                 gallery = $('[data-gallery-role=gallery-placeholder]', '.column.main'),
                 productData = this._determineProductData(),
@@ -871,6 +870,7 @@ define([
                 return;
             }
 
+            // New addition that is originally not in the default
             //Check if product list page or view page
             let currentSelectedProduct = $('input#_selected_product_id');
             if (currentSelectedProduct.size() > 0) {
@@ -1263,8 +1263,10 @@ define([
                     }.bind(this));
                 }
 
+                // New addition that is originally not in the default
                 if (isInitial) {
                     $(this.options.mediaGallerySelector).AddFotoramaVideoEvents();
+               
                 } else {
                     $(this.options.mediaGallerySelector).AddFotoramaVideoEvents({
                         selectedOption: this.getProduct(),

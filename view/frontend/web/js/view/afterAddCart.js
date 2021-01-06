@@ -1,7 +1,7 @@
 (function($){
     $(document).on('ajax:addToCart', resetProd);
 
-    const productSel = document.querySelector('#product_addtocart_form input[name=product]');
+    const productSel = document.querySelector('#product_addtocart_form input[name=_selected_product_id]');
     const productId = productSel ? productSel.value : 0;
     
     function resetProd() {

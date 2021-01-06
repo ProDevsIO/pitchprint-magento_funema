@@ -55,12 +55,9 @@ $productId = $block->getProductId();
 				refreshDesignId();
 
 				function refreshDesignId() {
-					
 					const getProductId = pp_w2p_getProductId();
 					const getDesignId = pp_w2p_getDesignId(getProductId);
 					const localPId = pp_w2p_getLocalPId(getProductId);
-
-					console.log('Current Product Id: ', getProductId, ' | Current Design ID: ',getDesignId)
 
 					if (typeof PitchPrintClient === 'undefined') return;
 
