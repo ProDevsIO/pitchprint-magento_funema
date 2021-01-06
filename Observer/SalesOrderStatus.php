@@ -62,29 +62,34 @@ class SalesOrderStatus implements ObserverInterface
     }
     private function setOrderDetails($order, $userId, $p_items, $cred)
     {
+        
         $billingAddress = $order->getBillingAddress();
         $shippingAddress = $order->getShippingAddress();
         
         $billingAddressArray = [];
-        array_push($billingAddressArray, $billingAddress->getStreet());
-        array_push($billingAddressArray, $billingAddress->getCity());
-        array_push($billingAddressArray, $billingAddress->getRegion());
-        array_push($billingAddressArray, $this->countryFactory->create()->loadByCode($billingAddress->getCountryId())->getName());
-        
+        if ($billingAddress) {
+            array_push($billingAddressArray, $billingAddress->getStreet());
+            array_push($billingAddressArray, $billingAddress->getCity());
+            array_push($billingAddressArray, $billingAddress->getRegion());
+            array_push($billingAddressArray, $this->countryFactory->create()->loadByCode($billingAddress->getCountryId())->getName());    
+        }
+         
         $shippingAddressArray = [];
-        array_push($shippingAddressArray, $billingAddress->getStreet());
-        array_push($shippingAddressArray, $billingAddress->getCity());
-        array_push($shippingAddressArray, $billingAddress->getRegion());
-        array_push($shippingAddressArray, $this->countryFactory->create()->loadByCode($shippingAddress->getCountryId())->getName());
-        
+        if ($shippingAddress) {
+            array_push($shippingAddressArray, $billingAddress->getStreet());
+            array_push($shippingAddressArray, $billingAddress->getCity());
+            array_push($shippingAddressArray, $billingAddress->getRegion());
+            array_push($shippingAddressArray, $this->countryFactory->create()->loadByCode($shippingAddress->getCountryId())->getName());
+        }
+
         $opts =  array (
                 'products' =>  urlencode(json_encode($p_items)),
                 'client' => 'mg',
                 'billingEmail' => $order->getCustomerEmail(),
-                'billingPhone' => $order->getShippingAddress()->getTelephone(),
+                'billingPhone' => $order->getShippingAddress() ? $order->getShippingAddress()->getTelephone() : "",
                 'billingName' => $order->getCustomerName(),
                 'billingAddress' => $billingAddressArray,
-                'shippingName' => $order->getShippingAddress()->getFirstName(),
+                'shippingName' => $order->getShippingAddress() ? $order->getShippingAddress()->getFirstName() : "",
                 'shippingAddress' => $shippingAddressArray,
                 'orderId' => $order->getId(),
                 'customer' => $userId,
