@@ -12,15 +12,18 @@ class SalesOrderStatus implements ObserverInterface
     protected $authSession;
     protected $countryFactory;
     protected $logger;
+    protected $_storeManager;
 
     public function __construct(
         Session $authSession,
         CountryFactory $countryFactory,
-        \Psr\Log\LoggerInterface $logger
+        \Psr\Log\LoggerInterface $logger,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         $this->authSession = $authSession;
         $this->countryFactory = $countryFactory;
         $this->logger = $logger;
+        $this->_storeManager = $storeManager;
     }
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
@@ -39,22 +42,33 @@ class SalesOrderStatus implements ObserverInterface
                 if (!$pp_data) {
                     continue;
                 }
+
+                $projectData = json_decode(urldecode($pp_data));
+                $designTitle = $projectData->designTitle;
+
+                $metaData = (object) [
+                    "id" => null,
+                    "qty" =>  $item->getQtyOrdered(),
+                    "designTitle" => $designTitle,
+                    'storeName' => $this->getStoreCode()
+                ];
+
                 $newItem = [];
                 $newItem['name']        = $item->getName();
                 $newItem['id']          = null;
-                $newItem['qty']         = $item->getQtyOrdered();
+                $newItem['qty']         = json_encode($metaData);
                 $newItem['pitchprint']  = $pp_data;
                 array_push($pp_items, $newItem);
             }
-            $this->logger->info('pp_items', $pp_items);
+
             if (!count($pp_items)) {
                 return;
             }
-            $creds = $this->ppGetCreds();
-            if (!isset($creds[0])) {
+            $getCredentials = $this->ppGetCreds();
+            if (!isset($getCredentials[0])) {
                 return;
             }
-            $credentials = $this->generateSignature($creds[0]);
+            $credentials = $this->generateSignature($getCredentials[0]);
             $order_details = $this->setOrderDetails($order, $userId, $pp_items, $credentials);
             if ($order_details) {
                 $this->logger->info('Sending webhook');
@@ -91,27 +105,46 @@ class SalesOrderStatus implements ObserverInterface
 
         $billingAddress = $order->getBillingAddress();
         $shippingAddress = $order->getShippingAddress();
-
         $billingAddressArray = [];
-        if ($billingAddress) {
-            array_push($billingAddressArray, $billingAddress->getStreet());
-            array_push($billingAddressArray, $billingAddress->getCity());
-            array_push($billingAddressArray, $billingAddress->getRegion());
-            array_push($billingAddressArray, $this->countryFactory->create()->loadByCode($billingAddress->getCountryId())->getName());    
-        }
-
         $shippingAddressArray = [];
-        if ($shippingAddress) {
-            array_push($shippingAddressArray, $billingAddress->getStreet());
-            array_push($shippingAddressArray, $billingAddress->getCity());
-            array_push($shippingAddressArray, $billingAddress->getRegion());
-            array_push(
-                $shippingAddressArray,
-                $this->countryFactory->create()->loadByCode($shippingAddress->getCountryId())->getName()
-            );
+
+        if ($billingAddress) {
+            if (!is_null($billingAddress->getStreet()) && !empty($billingAddress->getStreet())) {
+                array_push($billingAddressArray, $billingAddress->getStreet());
+            }
+            if (!is_null($billingAddress->getCity())) {
+                array_push($billingAddressArray, $billingAddress->getCity());
+            }
+            if (!is_null($billingAddress->getRegion())) {
+                array_push($billingAddressArray, $billingAddress->getRegion());
+            }
+            if (!is_null($this->countryFactory->create()->loadByCode($billingAddress->getCountryId())->getName())) {
+                array_push(
+                    $billingAddressArray,
+                    $this->countryFactory->create()->loadByCode($billingAddress->getCountryId())->getName()
+                );
+            }
         }
 
-        $opts =  array (
+        if ($shippingAddress) {
+            if (!is_null($shippingAddress->getStreet())) {
+                array_push($shippingAddressArray, $shippingAddress->getStreet());
+            }
+            if (!is_null($shippingAddress->getCity())) {
+                array_push($shippingAddressArray, $shippingAddress->getCity());
+            }
+            if (!is_null($shippingAddress->getRegion())) {
+                array_push($shippingAddressArray, $shippingAddress->getRegion());
+            }
+            if (!is_null($this->countryFactory->create()->loadByCode($shippingAddress->getCountryId())->getName())) {
+                array_push(
+                    $shippingAddressArray,
+                    $this->countryFactory->create()->loadByCode($shippingAddress->getCountryId())->getName()
+                );
+            }
+        }
+
+        return array (
                 'products' =>  urlencode(json_encode($p_items)),
                 'client' => 'mg',
                 'billingEmail' => $order->getCustomerEmail(),
@@ -127,7 +160,6 @@ class SalesOrderStatus implements ObserverInterface
                 'signature' => $cred['signature'],
                 'timestamp' => $cred['timestamp']
         );
-        return $opts;
     }
 
     private function fetchPpData($quoteId)
@@ -139,22 +171,26 @@ class SalesOrderStatus implements ObserverInterface
         return 0;
     }
 
-    private function getProjectData($quoteId)
-    {
+    private function getProjectData($quoteId) {
         $objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
         $resource       = $objectManager->get('Magento\Framework\App\ResourceConnection');
         $db             = $resource->getConnection();
         $tableName      = $resource->getTableName(\PitchPrintInc\PitchPrint\Config\Constants::TABLE_QUOTE_ITEM);
         $sql            = "SELECT `project_data` FROM $tableName WHERE `item_id` = $quoteId";
-        $data           = $db->fetchAll($sql);
-        return $data;
+        return $db->fetchAll($sql);
     }
+
     private function generateSignature($credentials)
     {
         $timestamp = time();
         $signature = md5($credentials['api_key'] . $credentials['secret_key'] . $timestamp);
-        return array ('timestamp' => $timestamp, 'apiKey' => $credentials['api_key'], 'signature' => $signature);
+        return array (
+            'timestamp' => $timestamp,
+            'apiKey' => $credentials['api_key'],
+            'signature' => $signature
+        );
     }
+
     private function ppGetCreds()
     {
         $objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
@@ -163,5 +199,15 @@ class SalesOrderStatus implements ObserverInterface
         $tableName      = $resource->getTableName(\PitchPrintInc\PitchPrint\Config\Constants::TABLE_CONFIG);
 
         return $db->fetchAll("SELECT * FROM $tableName");
+    }
+
+    /**
+     * Get Store name
+     *
+     * @return string
+     */
+    private function getStoreCode()
+    {
+        return $this->_storeManager->getStore()->getCode();
     }
 }
