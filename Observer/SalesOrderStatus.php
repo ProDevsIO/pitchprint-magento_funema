@@ -55,7 +55,7 @@ class SalesOrderStatus implements ObserverInterface
 
                 $newItem = [];
                 $newItem['name']        = $item->getName();
-                $newItem['id']          = json_encode($metaData);
+                $newItem['id']          = null;
                 $newItem['qty']         = json_encode($metaData);
                 $newItem['pitchprint']  = $pp_data;
                 array_push($pp_items, $newItem);
