@@ -48,7 +48,7 @@ class SalesOrderStatus implements ObserverInterface
 
                 $metaData = (object) [
                     "id" => null,
-                    "qty" =>  $item->getQtyOrdered(),
+                    "qty" =>  $item->getProduct()->getAttributeText('frame_quantity') ?? $item->getQtyOrdered(),
                     "designTitle" => $designTitle,
                     'storeName' => $this->getStoreCode()
                 ];
@@ -60,7 +60,6 @@ class SalesOrderStatus implements ObserverInterface
                 $newItem['pitchprint']  = $pp_data;
                 array_push($pp_items, $newItem);
             }
-
             if (!count($pp_items)) {
                 return;
             }
@@ -143,7 +142,6 @@ class SalesOrderStatus implements ObserverInterface
                 );
             }
         }
-
         return array (
                 'products' =>  urlencode(json_encode($p_items)),
                 'client' => 'mg',
@@ -153,7 +151,7 @@ class SalesOrderStatus implements ObserverInterface
                 'billingAddress' => $billingAddressArray,
                 'shippingName' => $order->getShippingAddress() ? $order->getShippingAddress()->getFirstName() : "",
                 'shippingAddress' => $shippingAddressArray,
-                'orderId' => $order->getId(),
+                'orderId' => $order->getIncrementId(),
                 'customer' => $userId,
                 'status' => 'new',
                 'apiKey' => $cred['apiKey'],
@@ -171,7 +169,8 @@ class SalesOrderStatus implements ObserverInterface
         return 0;
     }
 
-    private function getProjectData($quoteId) {
+    private function getProjectData($quoteId)
+    {
         $objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
         $resource       = $objectManager->get('Magento\Framework\App\ResourceConnection');
         $db             = $resource->getConnection();
@@ -184,11 +183,7 @@ class SalesOrderStatus implements ObserverInterface
     {
         $timestamp = time();
         $signature = md5($credentials['api_key'] . $credentials['secret_key'] . $timestamp);
-        return array (
-            'timestamp' => $timestamp,
-            'apiKey' => $credentials['api_key'],
-            'signature' => $signature
-        );
+        return array ('timestamp' => $timestamp, 'apiKey' => $credentials['api_key'], 'signature' => $signature);
     }
 
     private function ppGetCreds()
