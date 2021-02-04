@@ -31,13 +31,23 @@ class SalesOrderStatus implements ObserverInterface
         $this->logger->info('New order');
 
         if ($order->getStatus() == Order::STATE_COMPLETE) {
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+
             $user = $this->authSession->getUser();
             $userId = $user ? $user->getId() : 0;
             $items          = $order->getAllItems();
             $pp_items       = array();
 
             foreach ($items as $item) {
+                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                $quantity = $item->getProduct()->getResource()->getAttribute('frame_quantity')
+                                ->getFrontend()->getValue($item->getProduct());
+
                 $pp_data = $this->fetchPpData($item->getQuoteItemId());
+                $quantityAtrribute = $item->getProduct()->getAttributeText('frame_quantity');
+
+                $this->logger->info('Quantity Attribute - ' . $quantityAtrribute);
+                $this->logger->info('Quantity - ' . $quantity);
 
                 if (!$pp_data) {
                     continue;
@@ -48,7 +58,7 @@ class SalesOrderStatus implements ObserverInterface
 
                 $metaData = (object) [
                     "id" => null,
-                    "qty" =>  $item->getProduct()->getAttributeText('frame_quantity') ?? $item->getQtyOrdered(),
+                    "qty" => $quantity ?? $item->getQtyOrdered(),
                     "designTitle" => $designTitle,
                     'storeName' => $this->getStoreCode()
                 ];
@@ -60,6 +70,7 @@ class SalesOrderStatus implements ObserverInterface
                 $newItem['pitchprint']  = $pp_data;
                 array_push($pp_items, $newItem);
             }
+            $this->logger->info('pp_items', $pp_items);
             if (!count($pp_items)) {
                 return;
             }
@@ -183,7 +194,11 @@ class SalesOrderStatus implements ObserverInterface
     {
         $timestamp = time();
         $signature = md5($credentials['api_key'] . $credentials['secret_key'] . $timestamp);
-        return array ('timestamp' => $timestamp, 'apiKey' => $credentials['api_key'], 'signature' => $signature);
+        return array (
+            'timestamp' => $timestamp,
+            'apiKey' => $credentials['api_key'],
+            'signature' => $signature
+        );
     }
 
     private function ppGetCreds()
