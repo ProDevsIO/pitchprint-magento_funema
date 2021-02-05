@@ -31,34 +31,27 @@ class SalesOrderStatus implements ObserverInterface
         $this->logger->info('New order');
 
         if ($order->getStatus() == Order::STATE_COMPLETE) {
-            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-
             $user = $this->authSession->getUser();
             $userId = $user ? $user->getId() : 0;
             $items          = $order->getAllItems();
             $pp_items       = array();
 
             foreach ($items as $item) {
-                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-                $quantity = $item->getProduct()->getResource()->getAttribute('frame_quantity')
-                                ->getFrontend()->getValue($item->getProduct());
-
                 $pp_data = $this->fetchPpData($item->getQuoteItemId());
-                $quantityAtrribute = $item->getProduct()->getAttributeText('frame_quantity');
-
-                $this->logger->info('Quantity Attribute - ' . $quantityAtrribute);
-                $this->logger->info('Quantity - ' . $quantity);
-
                 if (!$pp_data) {
                     continue;
                 }
 
+                $quantity = $item->getProduct()->getFrameQuantity();
+                $quantityAtrribute = $item->getProduct()->getAttributeText('frame_quantity');
+                $this->logger->info('Quantity Attribute - ' . $quantityAtrribute . ' - E ' . $quantity);
+                $this->logger->info('Quantityj - ' . $quantity ? (int) $quantity : 0);
                 $projectData = json_decode(urldecode($pp_data));
                 $designTitle = $projectData->designTitle;
 
                 $metaData = (object) [
                     "id" => null,
-                    "qty" => $quantity ?? $item->getQtyOrdered(),
+                    "qty" => $quantity ? (int) $quantity : 0,
                     "designTitle" => $designTitle,
                     'storeName' => $this->getStoreCode()
                 ];
