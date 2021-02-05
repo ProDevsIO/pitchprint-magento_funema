@@ -37,24 +37,21 @@ class SalesOrderStatus implements ObserverInterface
             $pp_items       = array();
 
             foreach ($items as $item) {
-                $quantity = $item->getProduct()->getFrameQuantity();
-
                 $pp_data = $this->fetchPpData($item->getQuoteItemId());
-                $quantityAtrribute = $item->getProduct()->getAttributeText('frame_quantity');
-
-                $this->logger->info('Quantity Attribute - ' . $quantityAtrribute);
-                $this->logger->info('Quantity - ' . $quantity);
-
                 if (!$pp_data) {
                     continue;
                 }
 
+                $quantity = $item->getProduct()->getFrameQuantity();
+                $quantityAtrribute = $item->getProduct()->getAttributeText('frame_quantity');
+                $this->logger->info('Quantity Attribute - ' . $quantityAtrribute . ' - E ' . $quantity);
+                $this->logger->info('Quantityj - ' . $quantity ? (int) $quantity : 0);
                 $projectData = json_decode(urldecode($pp_data));
                 $designTitle = $projectData->designTitle;
 
                 $metaData = (object) [
                     "id" => null,
-                    "qty" => $quantity ?? $item->getQtyOrdered(),
+                    "qty" => $quantity ? (int) $quantity : 0,
                     "designTitle" => $designTitle,
                     'storeName' => $this->getStoreCode()
                 ];
