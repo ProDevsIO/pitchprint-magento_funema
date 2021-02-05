@@ -31,17 +31,13 @@ class SalesOrderStatus implements ObserverInterface
         $this->logger->info('New order');
 
         if ($order->getStatus() == Order::STATE_COMPLETE) {
-            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-
             $user = $this->authSession->getUser();
             $userId = $user ? $user->getId() : 0;
             $items          = $order->getAllItems();
             $pp_items       = array();
 
             foreach ($items as $item) {
-                $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-                $quantity = $item->getProduct()->getResource()->getAttribute('frame_quantity')
-                                ->getFrontend()->getValue($item->getProduct());
+                $quantity = $item->getProduct()->getFrameQuantity();
 
                 $pp_data = $this->fetchPpData($item->getQuoteItemId());
                 $quantityAtrribute = $item->getProduct()->getAttributeText('frame_quantity');
