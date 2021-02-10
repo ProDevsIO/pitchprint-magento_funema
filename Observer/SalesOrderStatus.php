@@ -27,57 +27,64 @@ class SalesOrderStatus implements ObserverInterface
     }
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        $order = $observer->getEvent()->getOrder();
+        $invoice = $observer->getEvent()->getInvoice();
+        $order = $invoice->getOrder();
         $this->logger->info('New order');
+        $user = $this->authSession->getUser();
+        $userId = $user ? $user->getId() : 0;
+        $items          = $order->getAllItems();
+        $pp_items       = array();
 
-        if ($order->getStatus() == Order::STATE_COMPLETE) {
-            $user = $this->authSession->getUser();
-            $userId = $user ? $user->getId() : 0;
-            $items          = $order->getAllItems();
-            $pp_items       = array();
-
-            foreach ($items as $item) {
-                $pp_data = $this->fetchPpData($item->getQuoteItemId());
-                if (!$pp_data) {
-                    continue;
-                }
-
-                $quantity = $item->getProduct()->getFrameQuantity();
-                $quantityAtrribute = $item->getProduct()->getAttributeText('frame_quantity');
-                $this->logger->info('Quantity Attribute - ' . $quantityAtrribute . ' - E ' . $quantity);
-                $this->logger->info('Quantityj - ' . $quantity ? (int) $quantity : 0);
-                $projectData = json_decode(urldecode($pp_data));
-                $designTitle = $projectData->designTitle;
-
-                $metaData = (object) [
-                    "id" => null,
-                    "qty" => $quantity ? (int) $quantity : 0,
-                    "designTitle" => $designTitle,
-                    'storeName' => $this->getStoreCode()
-                ];
-
-                $newItem = [];
-                $newItem['name']        = $item->getName();
-                $newItem['id']          = null;
-                $newItem['qty']         = json_encode($metaData);
-                $newItem['pitchprint']  = $pp_data;
-                array_push($pp_items, $newItem);
+        foreach ($items as $item) {  
+            $pp_data = $this->fetchPpData($item->getQuoteItemId());
+            if (!$pp_data) {
+                continue;
             }
-            $this->logger->info('pp_items', $pp_items);
-            if (!count($pp_items)) {
-                return;
-            }
-            $getCredentials = $this->ppGetCreds();
-            if (!isset($getCredentials[0])) {
-                return;
-            }
-            $credentials = $this->generateSignature($getCredentials[0]);
-            $order_details = $this->setOrderDetails($order, $userId, $pp_items, $credentials);
-            if ($order_details) {
-                $this->logger->info('Sending webhook');
-                $this->logger->info('Order', (array) $order_details);
-                $this->sendWebhook($order_details);
-            }
+            $product = $item->getProduct();
+
+            $quantity = $product->getFrameQuantity();
+            $quantityAtrribute = $product->getAttributeText('frame_quantity');
+            $getQuantityData = $product->getData('frame_quantity');
+            $getQuantity = $product->getDataByKey('frame_quantity');
+        
+            $this->logger->info(
+                'Quantity Attribute Text - ' . $quantityAtrribute . 
+                ' - Quatity Frame Quantity ' . $quantity .
+                ' - Get Quantity Frame ' . $getQuantityData . 
+                ' - Get Quantity  ' . $getQuantity
+            );
+
+            $projectData = json_decode(urldecode($pp_data));
+            $designTitle = $projectData->designTitle;
+
+            $metaData = (object) [
+                "id" => null,
+                "qty" => $quantity ? (int) $quantity : 0,
+                "designTitle" => $designTitle,
+                'storeName' => $this->getStoreCode()
+            ];
+
+            $newItem = [];
+            $newItem['name']        = $item->getName();
+            $newItem['id']          = null;
+            $newItem['qty']         = json_encode($metaData);
+            $newItem['pitchprint']  = $pp_data;
+            array_push($pp_items, $newItem);
+        }
+        $this->logger->info('pp_items', $pp_items);
+        if (!count($pp_items)) {
+            return;
+        }
+        $getCredentials = $this->ppGetCreds();
+        if (!isset($getCredentials[0])) {
+            return;
+        }
+        $credentials = $this->generateSignature($getCredentials[0]);
+        $order_details = $this->setOrderDetails($order, $userId, $pp_items, $credentials);
+        if ($order_details) {
+            $this->logger->info('Sending webhook');
+            $this->logger->info('Order', (array) $order_details);
+            $this->sendWebhook($order_details);
         }
     }
 
