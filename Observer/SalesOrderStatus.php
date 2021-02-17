@@ -35,25 +35,24 @@ class SalesOrderStatus implements ObserverInterface
         $items          = $order->getAllItems();
         $pp_items       = array();
 
-        foreach ($items as $item) {  
+        foreach ($items as $item) {
             $pp_data = $this->fetchPpData($item->getQuoteItemId());
             if (!$pp_data) {
                 continue;
             }
-            $product = $item->getProduct();
-
-            $quantity = $product->getFrameQuantity();
-            $quantityAtrribute = $product->getAttributeText('frame_quantity');
-            $getQuantityData = $product->getData('frame_quantity');
-            $getQuantity = $product->getDataByKey('frame_quantity');
-        
-            $this->logger->info(
-                'Quantity Attribute Text - ' . $quantityAtrribute . 
-                ' - Quatity Frame Quantity ' . $quantity .
-                ' - Get Quantity Frame ' . $getQuantityData . 
-                ' - Get Quantity  ' . $getQuantity
-            );
-
+            $attributes = $item->getProductOptions()['attributes_info'] ?? [];
+            $quantity = 0;
+            if(gettype($attributes) === "array") {
+                foreach($attributes as $attribute) {
+                    if (isset($attribute['label']) && isset($attribute['value'])) {
+                        $label = strtolower($attribute['label']);
+                        if($label === "quantity" || $label === "aantal") {
+                            $quantity = $attribute['value'];
+                            break;
+                        }
+                    }
+                }
+            }
             $projectData = json_decode(urldecode($pp_data));
             $designTitle = $projectData->designTitle;
 
