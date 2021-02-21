@@ -42,19 +42,34 @@ class SalesOrderStatus implements ObserverInterface
             }
             $attributes = $item->getProductOptions()['attributes_info'] ?? [];
             $quantity = 0;
-            if(gettype($attributes) === "array") {
-                foreach($attributes as $attribute) {
+            $size = "";
+            if (gettype($attributes) === "array") {
+                foreach ($attributes as $attribute) {
                     if (isset($attribute['label']) && isset($attribute['value'])) {
                         $label = strtolower($attribute['label']);
-                        if($label === "quantity" || $label === "aantal") {
+                        if ($label === "size" || $label === "formaat") {
+                            $size = $attribute['value'];
+                            continue;
+                        }
+
+                        if ($label === "quantity" || $label === "aantal") {
                             $quantity = $attribute['value'];
-                            break;
                         }
                     }
                 }
             }
             $projectData = json_decode(urldecode($pp_data));
-            $designTitle = $projectData->designTitle;
+
+            $designTitle = "";
+            $ppDesignTitle = $projectData->designTitle;
+
+            $lastStr = substr($ppDesignTitle, strrpos($ppDesignTitle, '_') + 1);
+
+            if (strlen($lastStr) < 4) {
+                $designTitle = substr($ppDesignTitle, 0, strrpos($ppDesignTitle, '_')) . '_' . $size . '_';
+            } else {
+                $designTitle = $ppDesignTitle . '_' . $size . '_';
+            }
 
             $metaData = (object) [
                 "id" => null,
@@ -154,12 +169,12 @@ class SalesOrderStatus implements ObserverInterface
         }
         return array (
                 'products' =>  urlencode(json_encode($p_items)),
-                'client' => 'mg',
+                'client' => $order->getShippingAddress() ? $order->getShippingAddress()->getCompany() : "mg",
                 'billingEmail' => $order->getCustomerEmail(),
                 'billingPhone' => $order->getShippingAddress() ? $order->getShippingAddress()->getTelephone() : "",
                 'billingName' => $order->getCustomerName(),
                 'billingAddress' => $billingAddressArray,
-                'shippingName' => $order->getShippingAddress() ? $order->getShippingAddress()->getFirstName() : "",
+                'shippingName' => $order->getShippingAddress() ? $order->getShippingAddress()->getFirstName() . ' ' . $order->getShippingAddress()->getLastname() : "",
                 'shippingAddress' => $shippingAddressArray,
                 'orderId' => $order->getIncrementId(),
                 'customer' => $userId,
