@@ -30,6 +30,7 @@ class SalesOrderStatus implements ObserverInterface
         $invoice = $observer->getEvent()->getInvoice();
         $order = $invoice->getOrder();
         $this->logger->info('New order');
+
         $user = $this->authSession->getUser();
         $userId = $user ? $user->getId() : 0;
         $items          = $order->getAllItems();
@@ -113,7 +114,7 @@ class SalesOrderStatus implements ObserverInterface
         curl_setopt(
             $ch,
             CURLOPT_HTTPHEADER,
-            array (
+            array(
                 'Accept: application/json',
                 'Content-Type: application/json'
             )
@@ -160,28 +161,48 @@ class SalesOrderStatus implements ObserverInterface
             if (!is_null($shippingAddress->getRegion())) {
                 array_push($shippingAddressArray, $shippingAddress->getRegion());
             }
-            if (!is_null($this->countryFactory->create()->loadByCode($shippingAddress->getCountryId())->getName())) {
+            if (!is_null(
+                $this->countryFactory->create()->loadByCode($shippingAddress->getCountryId())->getName()
+            )) {
                 array_push(
                     $shippingAddressArray,
                     $this->countryFactory->create()->loadByCode($shippingAddress->getCountryId())->getName()
                 );
             }
         }
-        return array (
-                'products' =>  urlencode(json_encode($p_items)),
-                'client' => $order->getShippingAddress() ? $order->getShippingAddress()->getCompany() : "mg",
-                'billingEmail' => $order->getCustomerEmail(),
-                'billingPhone' => $order->getShippingAddress() ? $order->getShippingAddress()->getTelephone() : "",
-                'billingName' => $order->getCustomerName(),
-                'billingAddress' => $billingAddressArray,
-                'shippingName' => $order->getShippingAddress() ? $order->getShippingAddress()->getFirstName() . ' ' . $order->getShippingAddress()->getLastname() : "",
-                'shippingAddress' => $shippingAddressArray,
-                'orderId' => $order->getIncrementId(),
-                'customer' => $userId,
-                'status' => 'new',
-                'apiKey' => $cred['apiKey'],
-                'signature' => $cred['signature'],
-                'timestamp' => $cred['timestamp']
+
+        $address = $shippingAddress ? $shippingAddress : $billingAddress;
+
+        $customerDetails = (object) [
+            "id" => $userId,
+            "first_name" =>  $order->getCustomerFirstname() ? $order->getCustomerFirstname() :
+                $address->getFirstName(),
+            "last_name" => $order->getCustomerLastname() ? $order->getCustomerLastname() : $address->getLastname(),
+            "phone_number" =>  $shippingAddress ? $shippingAddress->getTelephone() : $billingAddress->getTelephone(),
+            "email" => $order->getCustomerEmail() ?? "No Email",
+            "company" => $address->getCompany(),
+            "vat_number" => $order->getCustomerTaxvat() ?? "none",
+            "address" => !empty($address->getStreet()) ? implode(",", $$address->getStreet()) : "No address",
+            "city" =>  $address->getCity(),
+            "state" => $address->getRegion(),
+            "zip" => $address->getPostcode(),
+            "country" => $this->countryFactory->create()->loadByCode($address->getCountryId())->getName()
+        ];
+        return array(
+            'products' =>  urlencode(json_encode($p_items)),
+            'client' => $order->getShippingAddress() ? $order->getShippingAddress()->getCompany() : "mg",
+            'billingEmail' => $order->getCustomerEmail(),
+            'billingPhone' => $order->getShippingAddress() ? $order->getShippingAddress()->getTelephone() : "",
+            'billingName' => $order->getCustomerName(),
+            'billingAddress' => $billingAddressArray,
+            'shippingName' => $order->getShippingAddress() ? $order->getShippingAddress()->getFirstName() . ' ' . $order->getShippingAddress()->getLastname() : "",
+            'shippingAddress' => $shippingAddressArray,
+            'orderId' => $order->getIncrementId(),
+            'customer' => json_encode($customerDetails),
+            'status' => 'new',
+            'apiKey' => $cred['apiKey'],
+            'signature' => $cred['signature'],
+            'timestamp' => $cred['timestamp']
         );
     }
 
@@ -208,7 +229,7 @@ class SalesOrderStatus implements ObserverInterface
     {
         $timestamp = time();
         $signature = md5($credentials['api_key'] . $credentials['secret_key'] . $timestamp);
-        return array (
+        return array(
             'timestamp' => $timestamp,
             'apiKey' => $credentials['api_key'],
             'signature' => $signature
