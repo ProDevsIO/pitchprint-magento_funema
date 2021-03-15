@@ -182,7 +182,7 @@ class SalesOrderStatus implements ObserverInterface
             "email" => $order->getCustomerEmail() ?? "No Email",
             "company" => $address->getCompany(),
             "vat_number" => $order->getCustomerTaxvat() ?? "none",
-            "address" => !empty($address->getStreet()) ? implode(",", $address->getStreet()) : "No address",
+            "address" => !empty($address->getStreet()) ? implode(",", $$address->getStreet()) : "No address",
             "city" =>  $address->getCity(),
             "state" => $address->getRegion(),
             "zip" => $address->getPostcode(),
