@@ -28,19 +28,15 @@ class After extends \Magento\Checkout\Block\Cart\Item\Renderer
 		$options 	= $this->getItem()->getOptions();	
 		$ppId 		= null;
 		
-		if (count($options)  <= 0) {	
-			return $ppId;
-		}
-
-		if (
-			 isset($options[0]['value']) && 
-			 $data = json_decode( $options[0]['value']) 
-		) {
-			if ( isset($data->_pitchprint) ) {
-				$ppId = $data->_pitchprint;
+		if (count($options)) {	
+			if ( isset($options[0]['value']) && $data = json_decode( $options[0]['value']) ) {
+				
+				
+				if ( isset($data->_pitchprint) ) {
+					$ppId = $data->_pitchprint;
+				}
 			}
 		}
-		
 	
 		return $ppId;
 	}
@@ -54,18 +50,22 @@ class After extends \Magento\Checkout\Block\Cart\Item\Renderer
 		}
 
 		if (isset($options[0]['value']) && $data = json_decode($options[0]['value'])) {
+			foreach($options as $option) {
+				$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
+				$logger = $objectManager->get('\Psr\Log\LoggerInterface');
+				$logger->info('Custom Attributes', (array) $option->getValue());
+			}
+			
 			if (!isset($data->super_attribute) || gettype($data->super_attribute) !== 'object') {
 				return $customOptions;
 			}
 		}
-
-		$acceptedLabels = ["size", "formaat", "quantity", "aantal"];
-
+				
       	foreach ((array) $data->super_attribute as $key => $value) {
 			$label = $this->getCustomAttributeLabel($key);
-			if ($label && in_array($label, $acceptedLabels)) {
+			if ($label) {
 				$customOptions[] = [
-					'label' => (string) ucwords($label),
+					'label' => (string) ucwords(str_replace("_"," ",$label)),
 					'value' => $this->getCustomAttributeValue($key, $value)
 				];
 			}
@@ -78,18 +78,14 @@ class After extends \Magento\Checkout\Block\Cart\Item\Renderer
 		$options 	= $this->getItem()->getOptions();	
 		$projectId 		= null;
 		
-			
-		if (count($options)  <= 0) {	
-			return $projectId;
-		}
-		
-		if ( isset($options[0]['value']) && $data = json_decode( $options[0]['value']) ) {
-			if ( isset($data->_pitchprint) ) {
-				$response = json_decode(urldecode($data->_pitchprint))->projectId ?? null;
-				$projectId = $response;
+		if (count($options)) {
+			if ( isset($options[0]['value']) && $data = json_decode( $options[0]['value']) ) {
+				if ( isset($data->_pitchprint) ) {
+					$response = json_decode(urldecode($data->_pitchprint))->projectId ?? null;
+					$projectId = $response;
+				}
 			}
 		}
-		
 		
 		return $projectId;
 	}
