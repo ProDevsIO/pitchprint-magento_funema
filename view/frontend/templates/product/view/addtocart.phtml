@@ -3,6 +3,9 @@ $designId 	= $block->getDesignId();
 $pitchPrintDesigns = $block->getAllPitchPrintProductDesigns();
 $apiKey 	= $block->getApiKey();
 $productId = $block->getProductId();
+$productName = $block->getProductName();
+$userId = $block->getUserId();
+$userData = $block->getUserData();
 
 ?>
 
@@ -22,6 +25,16 @@ $productId = $block->getProductId();
 		let productId = pp_w2p_getProductId();
 		let getDesignId = pp_w2p_getDesignId(productId);
 		let localPId = pp_w2p_getLocalPId(productId);
+		let userId = pp_w2p_getUserId();
+		let userData = pp_w2p_getUserData();
+
+		function pp_w2p_getUserId() {
+			return '<?= $userId; ?>';
+		}
+
+		function pp_w2p_getUserData() {
+			return JSON.parse('<?=$userData?>');
+		}
 
 		function pp_w2p_getProductId() {
 			const productSel = document.querySelector('#product_addtocart_form input[name=_selected_product_id]');
@@ -88,6 +101,9 @@ $productId = $block->getProductId();
 					productId = pp_w2p_getProductId();
 					getDesignId = pp_w2p_getDesignId(productId);
 					localPId = pp_w2p_getLocalPId(productId);
+					
+					userId = pp_w2p_getUserId();
+					userData = pp_w2p_getUserData();
 
 					refreshDesignId();
 					
@@ -102,7 +118,7 @@ $productId = $block->getProductId();
 					}
 					window.ppclient = new PitchPrintClient({
 						uploadUrl: 'url_pending',
-						userId: '1',
+						userId,
 						langCode: 'en',
 						enableUpload: 0,
 						designId: getDesignId,
@@ -115,22 +131,14 @@ $productId = $block->getProductId();
 						client: 'mg',
 						product: {
 							id: productId,
-							name: '' // todo get product name
+							name: '<?=$productName?>'
 						},
-						userData: {
-							email: '',
-							name: '',
-							firstname: '',
-							lastname: '',
-							telephone: '',
-							address: ''
-						}
+						userData
 					});
 
 					window.ppclient.on('project-saved', storeToLocal);
 				}
-
-				// updatePPDataInCartForm();	
+	
 				//After Save Event
 				// Save project ID against product ID in localStorage.
 				async function storeToLocal(e) {
@@ -138,7 +146,6 @@ $productId = $block->getProductId();
 						localStorage.pp_w2p_projects = JSON.stringify({});
 					}
 					if (!productId) {
-						console.log('Can not find product ID!');
 						return;
 					}
 					let currentLocalStorage = JSON.parse(localStorage.pp_w2p_projects);

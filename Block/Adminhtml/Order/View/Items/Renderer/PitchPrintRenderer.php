@@ -21,11 +21,4 @@ class PitchPrintRenderer extends \Magento\Sales\Block\Adminhtml\Order\View\Items
         $data           = $db->fetchAll( $sql );
         return $data;
 	}
-	
-    private function consoleLog($item)
-    {
-        $item = json_encode($item);
-        
-        echo "<script>console.log($item);</script>";
-    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <body>        
+    <body>    
         <referenceContainer name="product.info.form.content">
             <block 
                class="PitchPrintInc\PitchPrint\Block\Product\View\Display" 
@@ -8,6 +8,7 @@
                after="product.info.addtocart" 
                as="PitchPrintButtons" 
                template="PitchPrintInc_PitchPrint::product/view/addtocart.phtml"
+               cacheable="false"
            />
         </referenceContainer>
         <referenceBlock name="product.info.options.wrapper.bottom">
@@ -17,7 +18,10 @@
                after="product.info.addtocart.additional" 
                as="PitchPrintButtonsOptions" 
                template="PitchPrintInc_PitchPrint::product/view/addtocart.phtml"
+               cacheable="false"
            />
         </referenceBlock>
+       
+    
     </body>
 </page>
