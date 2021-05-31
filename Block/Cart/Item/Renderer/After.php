@@ -28,15 +28,19 @@ class After extends \Magento\Checkout\Block\Cart\Item\Renderer
 		$options 	= $this->getItem()->getOptions();	
 		$ppId 		= null;
 		
-		if (count($options)) {	
-			if ( isset($options[0]['value']) && $data = json_decode( $options[0]['value']) ) {
-				
-				
-				if ( isset($data->_pitchprint) ) {
-					$ppId = $data->_pitchprint;
-				}
+		if (count($options)  <= 0) {	
+			return $ppId;
+		}
+
+		if (
+			 isset($options[0]['value']) && 
+			 $data = json_decode( $options[0]['value']) 
+		) {
+			if ( isset($data->_pitchprint) ) {
+				$ppId = $data->_pitchprint;
 			}
 		}
+		
 	
 		return $ppId;
 	}
@@ -54,12 +58,14 @@ class After extends \Magento\Checkout\Block\Cart\Item\Renderer
 				return $customOptions;
 			}
 		}
-				
+
+		$acceptedLabels = ["size", "formaat", "quantity", "aantal"];
+
       	foreach ((array) $data->super_attribute as $key => $value) {
 			$label = $this->getCustomAttributeLabel($key);
-			if ($label) {
+			if ($label && in_array($label, $acceptedLabels)) {
 				$customOptions[] = [
-					'label' => (string) ucwords(str_replace("_"," ",$label)),
+					'label' => (string) ucwords($label),
 					'value' => $this->getCustomAttributeValue($key, $value)
 				];
 			}
@@ -72,14 +78,18 @@ class After extends \Magento\Checkout\Block\Cart\Item\Renderer
 		$options 	= $this->getItem()->getOptions();	
 		$projectId 		= null;
 		
-		if (count($options)) {
-			if ( isset($options[0]['value']) && $data = json_decode( $options[0]['value']) ) {
-				if ( isset($data->_pitchprint) ) {
-					$response = json_decode(urldecode($data->_pitchprint))->projectId ?? null;
-					$projectId = $response;
-				}
+			
+		if (count($options)  <= 0) {	
+			return $projectId;
+		}
+		
+		if ( isset($options[0]['value']) && $data = json_decode( $options[0]['value']) ) {
+			if ( isset($data->_pitchprint) ) {
+				$response = json_decode(urldecode($data->_pitchprint))->projectId ?? null;
+				$projectId = $response;
 			}
 		}
+		
 		
 		return $projectId;
 	}
