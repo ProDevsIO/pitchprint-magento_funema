@@ -49,13 +49,7 @@ class After extends \Magento\Checkout\Block\Cart\Item\Renderer
 			return $customOptions;
 		}
 
-		if (isset($options[0]['value']) && $data = json_decode($options[0]['value'])) {
-			foreach($options as $option) {
-				$objectManager =  \Magento\Framework\App\ObjectManager::getInstance();
-				$logger = $objectManager->get('\Psr\Log\LoggerInterface');
-				$logger->info('Custom Attributes', (array) $option->getValue());
-			}
-			
+		if (isset($options[0]['value']) && $data = json_decode($options[0]['value'])) {			
 			if (!isset($data->super_attribute) || gettype($data->super_attribute) !== 'object') {
 				return $customOptions;
 			}
