@@ -2,6 +2,8 @@
 
 namespace PitchPrintInc\PitchPrint\Block\Product\View;
 
+use Magento\Framework\Component\ComponentRegistrar;
+
 class Display extends \Magento\Framework\View\Element\Template {
 
 
@@ -13,11 +15,13 @@ class Display extends \Magento\Framework\View\Element\Template {
 	protected $_product_designs;
 	protected $_customer;
 	protected $_productName;
+	protected $componentRegistrar;
 
 	public function __construct(
 		\Magento\Framework\View\Element\Template\Context $context,
 		\Magento\Framework\Registry $coreRegistry,
-		\Magento\Customer\Model\Session $customer
+		\Magento\Customer\Model\Session $customer,
+		\Magento\Framework\Component\ComponentRegistrar $componentRegistrar
 	) {
 		 parent::__construct( $context );
 
@@ -31,6 +35,7 @@ class Display extends \Magento\Framework\View\Element\Template {
 		$this->_api_key         = $this->_fetchPpApiKey();
 		$this->_product_designs = $this->_fetchProductDesigns();
 		$this->_customer        = $customer;
+		$this->componentRegistrar = $componentRegistrar;
 	}
 
 	private function _fetchPpDesignId( $product_id ) {
@@ -83,6 +88,7 @@ class Display extends \Magento\Framework\View\Element\Template {
 		}
 		return $this->_customer->getCustomer()->getId();
 	}
+
 	public function getUserData() {
 		$customer = $this->_customer->getCustomer();
 		if ( ! $this->_customer->isLoggedIn() ) {
@@ -121,5 +127,9 @@ class Display extends \Magento\Framework\View\Element\Template {
 		);
 
 		return $payload;
+	}
+
+	public function getModulePath() {
+		return $this->componentRegistrar->getPath(ComponentRegistrar::MODULE, 'PitchPrintInc_PitchPrint');
 	}
 }
