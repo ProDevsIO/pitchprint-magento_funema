@@ -131,7 +131,9 @@ $userData = $block->getUserData();
 						client: 'mg',
 						product: {
 							id: productId,
-							name: '<?=$productName?>'
+							name: '<?=$productName?>',
+							url: window.location.href,
+							productUrl: window.location.href,
 						},
 						userData
 					});
