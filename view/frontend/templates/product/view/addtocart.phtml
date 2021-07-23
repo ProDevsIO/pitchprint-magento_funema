@@ -116,6 +116,7 @@ $userData = $block->getUserData();
 					if (typeof PitchPrintClient === 'undefined') {
 						return;
 					}
+					let configurableProductId = document.querySelector("#product_addtocart_form input[name=product]");
 					window.ppclient = new PitchPrintClient({
 						uploadUrl: 'url_pending',
 						userId,
@@ -130,7 +131,7 @@ $userData = $block->getUserData();
 						apiKey: '<?=$apiKey?>',
 						client: 'mg',
 						product: {
-							id: productId,
+							id: configurableProductId,
 							name: '<?=$productName?>',
 							url: window.location.href,
 							productUrl: window.location.href,
