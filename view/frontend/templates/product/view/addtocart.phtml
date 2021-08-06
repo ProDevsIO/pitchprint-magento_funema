@@ -145,15 +145,16 @@ $userData = $block->getUserData();
 				//After Save Event
 				// Save project ID against product ID in localStorage.
 				async function storeToLocal(e) {
+					let configurableProductId = document.querySelector("#product_addtocart_form input[name=product]").value;
 					if (!localStorage.hasOwnProperty('pp_w2p_projects')) {
 						localStorage.pp_w2p_projects = JSON.stringify({});
 					}
-					if (!productId) {
+					if (!configurableProductId) {
 						return;
 					}
 					let currentLocalStorage = JSON.parse(localStorage.pp_w2p_projects);
 					let _projectData = await getPPInputValue();
-					currentLocalStorage[productId] = JSON.parse(decodeURIComponent(_projectData));
+					currentLocalStorage[configurableProductId] = JSON.parse(decodeURIComponent(_projectData));
 					localStorage.pp_w2p_projects = JSON.stringify(currentLocalStorage);
 					
 					let projectId = JSON.parse(decodeURIComponent(ppValEl.value)).projectId
