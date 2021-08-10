@@ -104,15 +104,26 @@ $userData = $block->getUserData();
 					
 					userId = pp_w2p_getUserId();
 					userData = pp_w2p_getUserData();
+					if (!localStorage.hasOwnProperty('pp_w2p_projects')) {
+						localStorage.pp_w2p_projects = JSON.stringify({});
+					}
+					if (!productId) {
+						return;
+					}
 
-					refreshDesignId();
-					
+					window.ppclient.fire('load-design-by-id', getDesignId)
+					let currentLocalStorage = JSON.parse(localStorage.pp_w2p_projects);
+					if(currentLocalStorage[productId] && currentLocalStorage[productId].projectId) {
+						updatePPPreview(currentLocalStorage[productId].projectId);
+					} else {
+						updatePPPreview(getDesignId);
+					}
 				});
 				$(document).on('ajax:addToCart', resetProd);
 
-				refreshDesignId();
+				initializePitchPrint();
 
-				function refreshDesignId() {
+				function initializePitchPrint() {
 					if (typeof PitchPrintClient === 'undefined') {
 						return;
 					}
