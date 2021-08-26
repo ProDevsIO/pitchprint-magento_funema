@@ -2,7 +2,7 @@
 	/* 
      * PitchPrint Admin JS for Magento 
      *
-     * @ Magento v2.2
+     * @ Magento v2.3
      * @ PitchPrint v9
      *
      */
@@ -14,8 +14,8 @@
     {
         //jQuery('head').append('<script type="text/javascript" src="https://pitchprint.io/rsc/js/a.mg.js"><\/script>');
         const   baseUrl = 'https://pitchprint.io',
-                pdfUrl  = 'https://pdf.pitchprint.io',
-                adminBase = 'https://admin.pitchprint.io';
+                pdfUrl  = 'https://pdf.pitchprint.com',
+                adminBase = 'https://admin.pitchprint.com';
                 
         jQuery('[id^=_pitchprint-data]').each(genLinks);
         
@@ -29,7 +29,7 @@
                                 <img src="${baseUrl}/previews/${pId}_1.jpg" width="50px">
                             </td>
                             <td>
-                                &#8226; <a target="_blank" href="${pdfUrl}?id=${pId}">Download PDF File</a>
+                                &#8226; <a target="_blank" href="${pdfUrl}/${pId}">Download PDF File</a>
                                 <br/>&#8226; <a target="_blank" href="${pdfUrl}?id=${pId}&raster=1" >Download Raster Renderings</a>
                                 <br/>&#8226; <a target="_blank" href="${adminBase}/projects#${pId}">Load Project and Modify</a>
                             </td>
