@@ -186,7 +186,8 @@ class SalesOrderStatus implements ObserverInterface
             "city" =>  $address->getCity(),
             "state" => $address->getRegion(),
             "zip" => $address->getPostcode(),
-            "country" => $this->countryFactory->create()->loadByCode($address->getCountryId())->getName()
+            "country" => $this->countryFactory->create()->loadByCode($address->getCountryId())->getName(),
+            'coupon_code'  => $order->getCouponCode() ? $order->getCouponCode() : 'none',
         ];
         return array(
             'products' =>  urlencode(json_encode($p_items)),
