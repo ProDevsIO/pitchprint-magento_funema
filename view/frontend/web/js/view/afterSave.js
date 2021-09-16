@@ -1,17 +1,19 @@
 (function($){
     window.ppclient.on('project-saved', storeToLocal);
-    
+   
     // Get Product Id
     const productSel = document.querySelector('#product_addtocart_form input[name=_selected_product_id]');
     const productId = productSel ? productSel.value : 0;
     const ppValEl = document.querySelector('#_pitchprint');
-    
+
     // Save project ID against product ID in localStorage.
     async function storeToLocal(e) {
         if (!localStorage.hasOwnProperty('pp_w2p_projects')) 
             localStorage.pp_w2p_projects = JSON.stringify({});
-        if (!productId) 
-            return console.log('Can not find product ID!');
+        if (!productId) {
+            console.log('Can not find product ID!');
+            return;
+        }
             
         let currentLocalStorage = JSON.parse(localStorage.pp_w2p_projects);
         let _projectData = await getPPInputValue();

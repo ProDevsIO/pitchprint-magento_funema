@@ -9,9 +9,9 @@ $userId = $block->getUserId();
 $userData = $block->getUserData();
 ?>
 
-<?php if ( $designId && $designId != 'none' && $apiKey ) : ?>
+<?php if ($designId && $designId != 'none' && $apiKey) : ?>
 
-	<input type="hidden" id="_pitchprint" name="_pitchprint"/>
+	<input type="hidden" id="_pitchprint" name="_pitchprint" />
 	<input type="hidden" id="_selected_product_id" name="_selected_product_id" value="<?= $productId; ?>" />
 	<script defer="true" src="https://pitchprint.io/rsc/js/client.js"></script>
 
@@ -33,14 +33,14 @@ $userData = $block->getUserData();
 		}
 
 		function pp_w2p_getUserData() {
-			return JSON.parse('<?=$userData?>');
+			return JSON.parse('<?= $userData ?>');
 		}
 
 		function pp_w2p_getProductId() {
-			const productSel = document.querySelector('#product_addtocart_form input[name=_selected_product_id]');
+			const productSel = document.querySelector('#product_addtocart_form input[name=product]');
 			return productSel ? productSel.value : 0;
 		}
-		
+
 		function pp_w2p_getLocalPId(productId) {
 			if (!localStorage.hasOwnProperty('pp_w2p_projects'))
 				return 0;
@@ -52,8 +52,8 @@ $userData = $block->getUserData();
 		function pp_w2p_getDesignId(productId) {
 			let productDesigns = '<?= json_encode($pitchPrintDesigns); ?>'
 			productDesigns = JSON.parse(productDesigns)
-			let designId = '<?=$designId?>'
-			
+			let designId = '<?= $designId ?>'
+
 			for (let [key, value] of Object.entries(productDesigns)) {
 				if (parseInt(value.product_id) === parseInt(productId)) {
 					designId = value.design_id;
@@ -75,47 +75,64 @@ $userData = $block->getUserData();
 			}
 			return objects;
 		}
-		
+
 		//AferAddCart Event
 		function resetProd() {
-			if (!productId 
-				|| !localStorage.hasOwnProperty('pp_w2p_projects'))  {
-					return;
+			if (!productId ||
+				!localStorage.hasOwnProperty('pp_w2p_projects')) {
+				return;
 			}
 			let currentLocalStorage = JSON.parse(localStorage.pp_w2p_projects);
-			if(currentLocalStorage[productId]) {
+			if (currentLocalStorage[productId]) {
 				delete currentLocalStorage[productId];
-			} else { 
-				return; 
+			} else {
+				return;
 			}
 			localStorage.pp_w2p_projects = JSON.stringify(currentLocalStorage);
 		}
 
-		(function( _doc, window, require ) {
+		(function(_doc, window, require) {
 			require([
 				'jquery',
 				'domReady!'
-			], function ($) {
+			], function($) {
 				// Get Product Id
-				$(document).on('change',"[name=_selected_product_id]" , function() {
-					productId = pp_w2p_getProductId();
-					getDesignId = pp_w2p_getDesignId(productId);
-					localPId = pp_w2p_getLocalPId(productId);
-					
-					userId = pp_w2p_getUserId();
-					userData = pp_w2p_getUserData();
+				// $(document).on('change', "[name=_selected_product_id]", function() {
+				// const productSel = document.querySelector('#product_addtocart_form input[name=_selected_product_id]');
+				//  productId ? productSel.value : 0;();
+				// getDesignId = pp_w2p_getDesignId(productId);
+				// localPId = pp_w2p_getLocalPId(productId);
 
-					refreshDesignId();
-					
-				});
+				// userId = pp_w2p_getUserId();
+				// userData = pp_w2p_getUserData();
+				// if (!localStorage.hasOwnProperty('pp_w2p_projects')) {
+				// 	localStorage.pp_w2p_projects = JSON.stringify({});
+				// }
+				// console.log('Pharaoh', 'Product Id: ' + productId);
+				// if (!productId) {
+				// 	return;
+				// }
+
+				// if (window.ppclient) {
+				// 	window.ppclient.fire('load-design-by-id', getDesignId)
+				// }
+				// let currentLocalStorage = JSON.parse(localStorage.pp_w2p_projects);
+				// if(currentLocalStorage[productId] && currentLocalStorage[productId].projectId) {
+				// 	updatePPPreview(currentLocalStorage[productId].projectId);
+				// } else {
+				// 	updatePPPreview(getDesignId);
+				// }
+				// });
 				$(document).on('ajax:addToCart', resetProd);
 
-				refreshDesignId();
 
-				function refreshDesignId() {
+				initializePitchPrint();
+
+				function initializePitchPrint() {
 					if (typeof PitchPrintClient === 'undefined') {
 						return;
 					}
+					let configurableProductId = document.querySelector("#product_addtocart_form input[name=product]").value;
 					window.ppclient = new PitchPrintClient({
 						uploadUrl: 'url_pending',
 						userId,
@@ -123,15 +140,15 @@ $userData = $block->getUserData();
 						enableUpload: 0,
 						designId: getDesignId,
 						previews: '',
-						mode: localPId ? 'edit': 'new',
+						mode: localPId ? 'edit' : 'new',
 						createButtons: true,
 						projectId: localPId,
-						pluginRoot: '<?=$path?>',
-						apiKey: '<?=$apiKey?>',
+						pluginRoot: '<?= $path ?>',
+						apiKey: '<?= $apiKey ?>',
 						client: 'mg',
 						product: {
-							id: productId,
-							name: '<?=$productName?>',
+							id: configurableProductId,
+							name: '<?= $productName ?>',
 							url: window.location.href,
 							productUrl: window.location.href,
 						},
@@ -140,25 +157,28 @@ $userData = $block->getUserData();
 
 					window.ppclient.on('project-saved', storeToLocal);
 				}
-	
+
 				//After Save Event
 				// Save project ID against product ID in localStorage.
 				async function storeToLocal(e) {
+					let configurableProductId = document.querySelector("#product_addtocart_form input[name=product]").value;
 					if (!localStorage.hasOwnProperty('pp_w2p_projects')) {
 						localStorage.pp_w2p_projects = JSON.stringify({});
 					}
-					if (!productId) {
+					if (!configurableProductId) {
 						return;
 					}
 					let currentLocalStorage = JSON.parse(localStorage.pp_w2p_projects);
 					let _projectData = await getPPInputValue();
-					currentLocalStorage[productId] = JSON.parse(decodeURIComponent(_projectData));
+					currentLocalStorage[configurableProductId] = JSON.parse(decodeURIComponent(_projectData));
 					localStorage.pp_w2p_projects = JSON.stringify(currentLocalStorage);
-					
+
 					let projectId = JSON.parse(decodeURIComponent(ppValEl.value)).projectId
-				
-					if (!projectId) { return; }
-					updatePPPreview(projectId);
+
+					if (!projectId) {
+						return;
+					}
+					updateProductImage(projectId);
 				}
 
 				function getValueNow(_resolve) {
@@ -169,10 +189,10 @@ $userData = $block->getUserData();
 				}
 
 				function getPPInputValue() {
-					return new Promise(_res=>{
-						if(!ppValEl.value)
-							_interval = setInterval(_=>getValueNow(_res),500);
-						else _res(ppValEl.value);        
+					return new Promise(_res => {
+						if (!ppValEl.value)
+							_interval = setInterval(_ => getValueNow(_res), 500);
+						else _res(ppValEl.value);
 					});
 				}
 
@@ -184,7 +204,7 @@ $userData = $block->getUserData();
 				function activateResetButton() {
 					if (!resetAttempts) return;
 					if (!$('#pp_clear_design_btn').length) {
-						setTimeout(activateResetButton,500);
+						setTimeout(activateResetButton, 500);
 						resetAttempts--;
 						return;
 					}
@@ -193,7 +213,10 @@ $userData = $block->getUserData();
 				}
 
 				function clearPPProject() {
-					if (!productId) { console.log('No Product ID found!'); return; }
+					if (!productId) {
+						console.log('No Product ID found!');
+						return;
+					}
 					let newLocalS = JSON.parse(localStorage.pp_w2p_projects)
 					delete newLocalS[productId];
 					localStorage.pp_w2p_projects = JSON.stringify((newLocalS));
@@ -202,39 +225,72 @@ $userData = $block->getUserData();
 				}
 
 				//onProductLoad Event
-				function updatePPDataInCartForm () {
-					if (!productId) { return; }
+				function updatePPDataInCartForm() {
+					if (!productId) {
+						return;
+					}
 					let pprintSpProjects = localStorage.hasOwnProperty('pprint-sp') ? JSON.parse(localStorage.getItem('pprint-sp')) : null;
 					let pprintSpProject = pprintSpProjects ? getValues(pprintSpProjects, productId)[0] : "";
-					
-					if(!ppValEl.value && pprintSpProject) {
+
+					if (!ppValEl.value && pprintSpProject) {
 						ppValEl.value = pprintSpProject;
 					}
-					
+
 					if (!ppValEl.value) {
 						return;
 					}
 					let projectId = JSON.parse(decodeURIComponent(ppValEl.value)).projectId
-					
-					if (!projectId) { return; }
-					
-					$('.gallery-placeholder').on('f:load',updatePPPreview(projectId));
+
+					if (!projectId) {
+						return;
+					}
+
+					$('.gallery-placeholder').on('f:load', updatePPPreview(projectId));
 				}
-				
-				function updatePPPreview(projectId = null) {
+
+				function updateProductImage(projectId = null) {
 					let getProjectId = projectId ? projectId : JSON.parse(localStorage.pp_w2p_projects)[productId].projectId;
-					setTimeout( _ => {
+					setTimeout(_ => {
 						const _n = Math.random();
-						const _prev = `https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/${getProjectId}_1.jpg?
-									rand=${_n}`;
-						$('.gallery-placeholder').html(`<img src="${_prev}">`);
-						$('.gallery-placeholder').css('text-align', 'center');
+						const _prev = `https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/${getProjectId}_1.jpg?rand=${_n}`;
+
+						let fotorama = jQuery('[data-gallery-role=gallery-placeholder').data('gallery');
+						let currentImages = fotorama.fotorama.data;
+						let alreadyExist = currentImages.find((image) => image.img === _prev);
+						if (!alreadyExist) {
+							let newImage = {
+								img: _prev,
+								full: _prev,
+								thumb: _prev,
+								type: "image",
+							}
+							if (currentImages.length > 1) {
+								currentImages.push(newImage);
+							}
+
+							fotorama.updateData(currentImages);
+							fotorama.last();
+						}
+
 						activateResetButton();
 					}, 500);
-				}		
+
+				}
+
+				function updatePPPreview(projectId = null) {
+					let getProjectId = projectId ? projectId : JSON.parse(localStorage.pp_w2p_projects)[productId].projectId;
+					setTimeout(_ => {
+						const _n = Math.random();
+						const _prev = `https://s3-eu-west-1.amazonaws.com/pitchprint.io/previews/${getProjectId}_1.jpg?rand=${_n}`;
+						$('.gallery-placeholder').html(`<img src="${_prev}">`);
+						$('.gallery-placeholder').css('text-align', 'center');
+
+						activateResetButton();
+					}, 500);
+				}
 			});
 
-			
+
 		})(document, window, require);
 	</script>
 

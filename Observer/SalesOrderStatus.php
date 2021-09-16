@@ -5,10 +5,10 @@ namespace PitchPrintInc\PitchPrint\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Backend\Model\Auth\Session;
 use Magento\Directory\Model\CountryFactory;
-use Magento\Sales\Model\Order;
 
 class SalesOrderStatus implements ObserverInterface
 {
+
     protected $authSession;
     protected $countryFactory;
     protected $logger;
@@ -20,40 +20,40 @@ class SalesOrderStatus implements ObserverInterface
         \Psr\Log\LoggerInterface $logger,
         \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
-        $this->authSession = $authSession;
+        $this->authSession    = $authSession;
         $this->countryFactory = $countryFactory;
-        $this->logger = $logger;
-        $this->_storeManager = $storeManager;
+        $this->logger         = $logger;
+        $this->_storeManager  = $storeManager;
     }
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $invoice = $observer->getEvent()->getInvoice();
-        $order = $invoice->getOrder();
+        $order   = $invoice->getOrder();
         $this->logger->info('New order');
 
-        $user = $this->authSession->getUser();
-        $userId = $user ? $user->getId() : 0;
-        $items          = $order->getAllItems();
-        $pp_items       = array();
+        $user     = $this->authSession->getUser();
+        $userId   = $user ? $user->getId() : 0;
+        $items    = $order->getAllItems();
+        $pp_items = array();
 
         foreach ($items as $item) {
             $pp_data = $this->fetchPpData($item->getQuoteItemId());
             if (!$pp_data) {
                 continue;
             }
-            $attributes = $item->getProductOptions()['attributes_info'] ?? [];
-            $quantity = 0;
-            $size = "";
-            if (gettype($attributes) === "array") {
+            $attributes = $item->getProductOptions()['attributes_info'] ?? array();
+            $quantity   = 0;
+            $size       = '';
+            if (gettype($attributes) === 'array') {
                 foreach ($attributes as $attribute) {
                     if (isset($attribute['label']) && isset($attribute['value'])) {
                         $label = strtolower($attribute['label']);
-                        if ($label === "size" || $label === "formaat") {
+                        if ($label === 'size' || $label === 'formaat') {
                             $size = $attribute['value'];
                             continue;
                         }
 
-                        if ($label === "quantity" || $label === "aantal") {
+                        if ($label === 'quantity' || $label === 'aantal') {
                             $quantity = $attribute['value'];
                         }
                     }
@@ -61,7 +61,7 @@ class SalesOrderStatus implements ObserverInterface
             }
             $projectData = json_decode(urldecode($pp_data));
 
-            $designTitle = "";
+            $designTitle   = '';
             $ppDesignTitle = $projectData->designTitle;
 
             $lastStr = substr($ppDesignTitle, strrpos($ppDesignTitle, '_') + 1);
@@ -72,18 +72,18 @@ class SalesOrderStatus implements ObserverInterface
                 $designTitle = $ppDesignTitle . '_' . $size . '_';
             }
 
-            $metaData = (object) [
-                "id" => null,
-                "qty" => $quantity ? (int) $quantity : 0,
-                "designTitle" => $designTitle,
-                'storeName' => $this->getStoreCode()
-            ];
+            $metaData = (object) array(
+                'id'          => null,
+                'qty'         => $quantity ? (int) $quantity : 0,
+                'designTitle' => $designTitle,
+                'storeName'   => $this->getStoreCode(),
+            );
 
-            $newItem = [];
-            $newItem['name']        = $item->getName();
-            $newItem['id']          = null;
-            $newItem['qty']         = json_encode($metaData);
-            $newItem['pitchprint']  = $pp_data;
+            $newItem               = array();
+            $newItem['name']       = $item->getName();
+            $newItem['id']         = null;
+            $newItem['qty']        = json_encode($metaData);
+            $newItem['pitchprint'] = $pp_data;
             array_push($pp_items, $newItem);
         }
         $this->logger->info('pp_items', $pp_items);
@@ -94,7 +94,7 @@ class SalesOrderStatus implements ObserverInterface
         if (!isset($getCredentials[0])) {
             return;
         }
-        $credentials = $this->generateSignature($getCredentials[0]);
+        $credentials   = $this->generateSignature($getCredentials[0]);
         $order_details = $this->setOrderDetails($order, $userId, $pp_items, $credentials);
         if ($order_details) {
             $this->logger->info('Sending webhook');
@@ -106,7 +106,7 @@ class SalesOrderStatus implements ObserverInterface
     private function sendWebhook($opts)
     {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "https://api.pitchprint.io/runtime/order-complete");
+        curl_setopt($ch, CURLOPT_URL, 'https://api.pitchprint.io/runtime/order-complete');
         curl_setopt($ch, CURLOPT_POST, true);
 
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($opts));
@@ -116,22 +116,22 @@ class SalesOrderStatus implements ObserverInterface
             CURLOPT_HTTPHEADER,
             array(
                 'Accept: application/json',
-                'Content-Type: application/json'
+                'Content-Type: application/json',
             )
         );
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        $output  = curl_exec($ch);
+        $output = curl_exec($ch);
         curl_close($ch);
     }
 
     private function setOrderDetails($order, $userId, $p_items, $cred)
     {
 
-        $billingAddress = $order->getBillingAddress();
-        $shippingAddress = $order->getShippingAddress();
-        $billingAddressArray = [];
-        $shippingAddressArray = [];
+        $billingAddress       = $order->getBillingAddress();
+        $shippingAddress      = $order->getShippingAddress();
+        $billingAddressArray  = array();
+        $shippingAddressArray = array();
 
         if ($billingAddress) {
             if (!is_null($billingAddress->getStreet()) && !empty($billingAddress->getStreet())) {
@@ -173,36 +173,37 @@ class SalesOrderStatus implements ObserverInterface
 
         $address = $shippingAddress ? $shippingAddress : $billingAddress;
 
-        $customerDetails = (object) [
-            "id" => $userId,
-            "first_name" =>  $order->getCustomerFirstname() ? $order->getCustomerFirstname() :
+        $customerDetails = (object) array(
+            'id'           => $userId,
+            'first_name'   => $order->getCustomerFirstname() ? $order->getCustomerFirstname() :
                 $address->getFirstName(),
-            "last_name" => $order->getCustomerLastname() ? $order->getCustomerLastname() : $address->getLastname(),
-            "phone_number" =>  $shippingAddress ? $shippingAddress->getTelephone() : $billingAddress->getTelephone(),
-            "email" => $order->getCustomerEmail() ?? "No Email",
-            "company" => $address->getCompany(),
-            "vat_number" => $order->getCustomerTaxvat() ?? "none",
-            "address" => !empty($address->getStreet()) ? implode(",", $address->getStreet()) : "No address",
-            "city" =>  $address->getCity(),
-            "state" => $address->getRegion(),
-            "zip" => $address->getPostcode(),
-            "country" => $this->countryFactory->create()->loadByCode($address->getCountryId())->getName()
-        ];
+            'last_name'    => $order->getCustomerLastname() ? $order->getCustomerLastname() : $address->getLastname(),
+            'phone_number' => $shippingAddress ? $shippingAddress->getTelephone() : $billingAddress->getTelephone(),
+            'email'        => $order->getCustomerEmail() ?? 'No Email',
+            'company'      => $address->getCompany(),
+            'vat_number'   => $order->getCustomerTaxvat() ?? 'none',
+            'address'      => !empty($address->getStreet()) ? implode(',', $$address->getStreet()) : 'No address',
+            'city'         => $address->getCity(),
+            'state'        => $address->getRegion(),
+            'zip'          => $address->getPostcode(),
+            'country'      => $this->countryFactory->create()->loadByCode($address->getCountryId())->getName(),
+            'coupon_code'  => $order->getCouponCode() ? $order->getCouponCode() : 'none',
+        );
         return array(
-            'products' =>  urlencode(json_encode($p_items)),
-            'client' => $order->getShippingAddress() ? $order->getShippingAddress()->getCompany() : "mg",
-            'billingEmail' => $order->getCustomerEmail(),
-            'billingPhone' => $order->getShippingAddress() ? $order->getShippingAddress()->getTelephone() : "",
-            'billingName' => $order->getCustomerName(),
-            'billingAddress' => $billingAddressArray,
-            'shippingName' => $order->getShippingAddress() ? $order->getShippingAddress()->getFirstName() . ' ' . $order->getShippingAddress()->getLastname() : "",
+            'products'        => urlencode(json_encode($p_items)),
+            'client'          => $order->getShippingAddress() ? $order->getShippingAddress()->getCompany() : 'mg',
+            'billingEmail'    => $order->getCustomerEmail(),
+            'billingPhone'    => $order->getShippingAddress() ? $order->getShippingAddress()->getTelephone() : '',
+            'billingName'     => $order->getCustomerName(),
+            'billingAddress'  => $billingAddressArray,
+            'shippingName'    => $order->getShippingAddress() ? $order->getShippingAddress()->getFirstName() . ' ' . $order->getShippingAddress()->getLastname() : '',
             'shippingAddress' => $shippingAddressArray,
-            'orderId' => $order->getIncrementId(),
-            'customer' => json_encode($customerDetails),
-            'status' => 'new',
-            'apiKey' => $cred['apiKey'],
-            'signature' => $cred['signature'],
-            'timestamp' => $cred['timestamp']
+            'orderId'         => $order->getIncrementId(),
+            'customer'        => json_encode($customerDetails),
+            'status'          => 'new',
+            'apiKey'          => $cred['apiKey'],
+            'signature'       => $cred['signature'],
+            'timestamp'       => $cred['timestamp'],
         );
     }
 
@@ -217,11 +218,11 @@ class SalesOrderStatus implements ObserverInterface
 
     private function getProjectData($quoteId)
     {
-        $objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
-        $resource       = $objectManager->get('Magento\Framework\App\ResourceConnection');
-        $db             = $resource->getConnection();
-        $tableName      = $resource->getTableName(\PitchPrintInc\PitchPrint\Config\Constants::TABLE_QUOTE_ITEM);
-        $sql            = "SELECT `project_data` FROM $tableName WHERE `item_id` = $quoteId";
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $resource      = $objectManager->get('Magento\Framework\App\ResourceConnection');
+        $db            = $resource->getConnection();
+        $tableName     = $resource->getTableName(\PitchPrintInc\PitchPrint\Config\Constants::TABLE_QUOTE_ITEM);
+        $sql           = "SELECT `project_data` FROM $tableName WHERE `item_id` = $quoteId";
         return $db->fetchAll($sql);
     }
 
@@ -231,17 +232,17 @@ class SalesOrderStatus implements ObserverInterface
         $signature = md5($credentials['api_key'] . $credentials['secret_key'] . $timestamp);
         return array(
             'timestamp' => $timestamp,
-            'apiKey' => $credentials['api_key'],
-            'signature' => $signature
+            'apiKey'    => $credentials['api_key'],
+            'signature' => $signature,
         );
     }
 
     private function ppGetCreds()
     {
-        $objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
-        $resource       = $objectManager->get('Magento\Framework\App\ResourceConnection');
-        $db             = $resource->getConnection();
-        $tableName      = $resource->getTableName(\PitchPrintInc\PitchPrint\Config\Constants::TABLE_CONFIG);
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $resource      = $objectManager->get('Magento\Framework\App\ResourceConnection');
+        $db            = $resource->getConnection();
+        $tableName     = $resource->getTableName(\PitchPrintInc\PitchPrint\Config\Constants::TABLE_CONFIG);
 
         return $db->fetchAll("SELECT * FROM $tableName");
     }
