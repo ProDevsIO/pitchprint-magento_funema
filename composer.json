@@ -2,7 +2,7 @@
     "name": "pitchprintinc/pitchprint",
     "description": "A module that customizes a product's design.",
     "type": "magento2-module",
-    "version": "1.4.5",
+    "version": "1.5.3",
     "license": [
       "OSL-3.0",
       "AFL-3.0"
